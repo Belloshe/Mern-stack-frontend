@@ -11,7 +11,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 const fetcher = url => axios.get(url).then(res => res.data);
 
 function Posts() {
-  const { data: posts, error } = useSWR('https://mern-stack-zhce.onrender.com/api/posts', fetcher);
+  const { data: posts, error } = useSWR('/api/posts', fetcher);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [editing, setEditing] = useState(null);
@@ -25,17 +25,17 @@ function Posts() {
     const token = localStorage.getItem('token');
     try {
       if (editing) {
-        await axios.put(`https://mern-stack-zhce.onrender.com/api/posts/${editing}`, { title, body }, {
+        await axios.put(`/api/posts/${editing}`, { title, body }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         mutate('/api/posts');
         setEditing(null);
         setMessage('Post updated successfully!');
       } else {
-        await axios.post('https://mern-stack-zhce.onrender.com/api/posts', { title, body }, {
+        await axios.post('/api/posts', { title, body }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        mutate('https://mern-stack-zhce.onrender.com/api/posts');
+        mutate('/api/posts');
         setMessage('Post added successfully!');
       }
       setTitle('');
@@ -56,10 +56,10 @@ function Posts() {
     const token = localStorage.getItem('token');
     try {
       console.log('Attempting to delete post with ID:', id);
-      await axios.delete(`https://mern-stack-zhce.onrender.com/api/posts/${id}`, {
+      await axios.delete(`/api/posts/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate('https://mern-stack-zhce.onrender.com/api/posts');
+      mutate('/api/posts');
       setMessage('Post deleted successfully!');
     } catch (err) {
       console.error('Error deleting post:', err);
@@ -70,10 +70,10 @@ function Posts() {
   const handleUpvote = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`https://mern-stack-zhce.onrender.com/api/posts/${id}/upvote`, {}, {
+      await axios.post(`/api/posts/${id}/upvote`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate('https://mern-stack-zhce.onrender.com/api/posts');
+      mutate('/api/posts');
     } catch (err) {
       console.error(err);
     }
@@ -82,10 +82,10 @@ function Posts() {
   const handleDownvote = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`https://mern-stack-zhce.onrender.com/api/posts/${id}/downvote`, {}, {
+      await axios.post(`/api/posts/${id}/downvote`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate('https://mern-stack-zhce.onrender.com/api/posts');
+      mutate('/api/posts');
     } catch (err) {
       console.error(err);
     }
