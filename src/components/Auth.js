@@ -10,7 +10,7 @@ function Auth({ setIsAuthenticated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? 'https://mern-stack-zhce.onrender.com/api/auth/login' : '/api/auth/register';
+    const url = isLogin ? 'https://mern-stack-zhce.onrender.com/api/auth/login' : 'https://mern-stack-zhce.onrender.com/api/auth/register';
     try {
       const response = await axios.post(url, { username, password });
       localStorage.setItem('token', response.data.token);
