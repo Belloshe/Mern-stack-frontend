@@ -1,5 +1,6 @@
+// src/components/Auth.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
 
 function Auth({ setIsAuthenticated }) {
@@ -10,9 +11,9 @@ function Auth({ setIsAuthenticated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? '/api/auth/login' : '/api/auth/register';
+    const path = isLogin ? '/auth/login' : '/auth/register';
     try {
-      const response = await axios.post(url, { username, password });
+      const response = await axiosInstance.post(path, { username, password });
       localStorage.setItem('token', response.data.token);
       setIsAuthenticated(true);
       setMessage(isLogin ? 'Login successful!' : 'Registration successful!');
@@ -20,12 +21,6 @@ function Auth({ setIsAuthenticated }) {
       console.error(err);
       setMessage('Error: ' + (err.response ? err.response.data.message : 'Server error'));
     }
-  };
-
-  const handleSignOut = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
-    setMessage('Signed out successfully!');
   };
 
   return (
@@ -76,16 +71,6 @@ function Auth({ setIsAuthenticated }) {
             {isLogin ? 'Switch to Register' : 'Switch to Login'}
           </Button>
         </Box>
-        {localStorage.getItem('token') && (
-          <Button
-            fullWidth
-            variant="outlined"
-            onClick={handleSignOut}
-            sx={{ mt: 2 }}
-          >
-            Sign Out
-          </Button>
-        )}
         {message && <Typography variant="body2" color="error">{message}</Typography>}
       </Box>
     </Container>
