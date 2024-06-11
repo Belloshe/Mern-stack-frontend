@@ -18,10 +18,10 @@ function Comments({ postId }) {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`/api/posts/${postId}/comments`, { body }, {
+      await axios.post(`https://mern-stack-zhce.onrender.com/api/posts/${postId}/comments`, { body }, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate(`/api/posts/${postId}/comments`);
+      mutate(`https://mern-stack-zhce.onrender.com/api/posts/${postId}/comments`);
       setBody('');
       setMessage('Comment added successfully!');
     } catch (err) {
@@ -33,10 +33,10 @@ function Comments({ postId }) {
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`/api/comments/${id}`, {
+      await axios.delete(`https://mern-stack-zhce.onrender.com/api/comments/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate(`/api/posts/${postId}/comments`);
+      mutate(`https://mern-stack-zhce.onrender.com/api/posts/${postId}/comments`);
       setMessage('Comment deleted successfully!');
     } catch (err) {
       console.error(err);
