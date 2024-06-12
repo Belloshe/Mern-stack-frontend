@@ -25,14 +25,14 @@ function Posts() {
     const token = localStorage.getItem('token');
     try {
       if (editing) {
-        await axiosInstance.put(`/posts/${editing}`, { title, body }, {
+        await axiosInstance.put(`/api/posts/${editing}`, { title, body }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         mutate('/api/posts');
         setEditing(null);
         setMessage('Post updated successfully!');
       } else {
-        await axiosInstance.post('/posts', { title, body }, {
+        await axiosInstance.post('/api/posts', { title, body }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         mutate('/api/posts');
@@ -55,8 +55,7 @@ function Posts() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      console.log('Attempting to delete post with ID:', id);
-      await axiosInstance.delete(`/posts/${id}`, {
+      await axiosInstance.delete(`/api/posts/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       mutate('/api/posts');
@@ -70,10 +69,10 @@ function Posts() {
   const handleUpvote = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axiosInstance.post(`/posts/${id}/upvote`, {}, {
+      await axiosInstance.post(`/api/posts/${id}/upvote`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate('/posts');
+      mutate('/api/posts');
     } catch (err) {
       console.error(err);
     }
@@ -82,10 +81,10 @@ function Posts() {
   const handleDownvote = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axiosInstance.post(`/posts/${id}/downvote`, {}, {
+      await axiosInstance.post(`/api/posts/${id}/downvote`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      mutate('/posts');
+      mutate('/api/posts');
     } catch (err) {
       console.error(err);
     }
