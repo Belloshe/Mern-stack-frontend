@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axiosInstance from '../axiosInstance'; 
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
-
 function Auth({ setIsAuthenticated }) {
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
@@ -10,7 +10,7 @@ function Auth({ setIsAuthenticated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? '/api/auth/login' : '/api/auth/register';
+    const url = isLogin ? '/auth/login' : '/auth/register';
     try {
       const response = await axiosInstance.post(url, { username, password });
       localStorage.setItem('token', response.data.token);
