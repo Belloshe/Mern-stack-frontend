@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axiosInstance from '../axiosInstance'; 
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
+
 function Auth({ setIsAuthenticated }) {
-  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
