@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance'; 
 import useSWR, { mutate } from 'swr';
 import Comments from './Comments';
 import { TextField, Button, Typography, Container, Box, Grid, Card, CardContent, CardActions, IconButton } from '@mui/material';
@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
-const fetcher = url => axios.get(url).then(res => res.data);
+const fetcher = url => axiosInstance.get(url).then(res => res.data);
 
 function Posts() {
   const { data: posts, error } = useSWR('/api/posts', fetcher);
@@ -25,14 +25,14 @@ function Posts() {
     const token = localStorage.getItem('token');
     try {
       if (editing) {
-        await axios.put(`/api/posts/${editing}`, { title, body }, {
+        await axiosInstance.put(`/api/posts/${editing}`, { title, body }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         mutate('/api/posts');
         setEditing(null);
         setMessage('Post updated successfully!');
       } else {
-        await axios.post('/api/posts', { title, body }, {
+        await axiosInstance.post('/api/posts', { title, body }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         mutate('/api/posts');
@@ -56,7 +56,7 @@ function Posts() {
     const token = localStorage.getItem('token');
     try {
       console.log('Attempting to delete post with ID:', id);
-      await axios.delete(`/api/posts/${id}`, {
+      await axiosInstance.delete(`/api/posts/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       mutate('/api/posts');
@@ -70,7 +70,7 @@ function Posts() {
   const handleUpvote = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`/api/posts/${id}/upvote`, {}, {
+      await axiosInstance.post(`/api/posts/${id}/upvote`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       mutate('/api/posts');
@@ -82,7 +82,7 @@ function Posts() {
   const handleDownvote = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`/api/posts/${id}/downvote`, {}, {
+      await axiosInstance.post(`/api/posts/${id}/downvote`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       mutate('/api/posts');

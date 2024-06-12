@@ -27,7 +27,7 @@ function App() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Simplified Version Of Reddit
+            Simplified Version Of Reddit
           </Typography>
           {isAuthenticated && (
             <Button color="inherit" onClick={handleSignOut}>
