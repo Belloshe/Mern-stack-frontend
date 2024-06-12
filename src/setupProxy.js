@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://mern-stack-zhce.onrender.com',
+      target: process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000', 
       changeOrigin: true,
     })
   );
