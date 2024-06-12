@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance'; 
 import useSWR, { mutate } from 'swr';
 import { TextField, Button, Typography, Box, List, ListItem, ListItemText, IconButton, Paper } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const fetcher = url => axios.get(url).then(res => res.data);
+const fetcher = url => axiosInstance.get(url).then(res => res.data);
 
 function Comments({ postId }) {
   const { data: comments, error } = useSWR(`/api/posts/${postId}/comments`, fetcher);
@@ -18,7 +18,7 @@ function Comments({ postId }) {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`/api/posts/${postId}/comments`, { body }, {
+      await axiosInstance.post(`/api/posts/${postId}/comments`, { body }, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       mutate(`/api/posts/${postId}/comments`);
@@ -33,7 +33,7 @@ function Comments({ postId }) {
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`/api/comments/${id}`, {
+      await axiosInstance.delete(`/api/comments/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       mutate(`/api/posts/${postId}/comments`);
