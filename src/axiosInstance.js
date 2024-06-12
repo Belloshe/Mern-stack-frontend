@@ -1,7 +1,8 @@
+
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'https://mern-stack-zhce.onrender.com',
+  baseURL: process.env.REACT_APP_API_URL || 'https://mern-stack-zhce.onrender.com/api',
 });
 
 axiosInstance.interceptors.request.use(config => {
