@@ -39,7 +39,7 @@ function App() {
       <Container component="main" maxWidth="md">
         <Box
           sx={{
-            marginTop: 7,
+            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
